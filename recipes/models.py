@@ -13,8 +13,8 @@ class Ingredient(models.Model):
     description = models.TextField(max_length=200, blank=True, null=True)
 
     class Meta:
-        verbose_name = 'ингредиент'
-        verbose_name_plural = 'ингредиенты'
+        verbose_name = 'Ингредиент'
+        verbose_name_plural = 'Ингредиенты'
 
     def __str__(self):
         return f'{self.title} {self.dimension}'
@@ -25,12 +25,12 @@ class IngredientRecipe(models.Model):
         'Recipe',
         on_delete=models.CASCADE,
         related_name='recipe_ingredients',
-        verbose_name="Рецепт")
+        verbose_name='Рецепт')
     ingredient = models.ForeignKey(
         'Ingredient',
         on_delete=models.CASCADE,
         related_name='recipe_ingredients',
-        verbose_name="Ингредиент")
+        verbose_name='Ингредиент')
     amount = models.DecimalField(max_digits=6,
                                  decimal_places=0,
                                  validators=[MinValueValidator(1)])
@@ -40,8 +40,8 @@ class IngredientRecipe(models.Model):
             models.UniqueConstraint(fields=['ingredient', 'recipe'],
                                     name='unique ingredient and recipe')
         ]
-        verbose_name = 'ингредиент рецепта'
-        verbose_name_plural = 'ингредиенты рецепта'
+        verbose_name = 'Ингредиент рецепта'
+        verbose_name_plural = 'Ингредиенты рецепта'
 
     def __str__(self):
         return f'{self.ingredient.title} \
@@ -113,6 +113,9 @@ class FollowRecipe(models.Model):
         on_delete=models.CASCADE,
         related_name='following_recipe')
 
+    class Meta:
+        verbose_name_plural = 'Избранные рецепты'
+
     def __str__(self):
         return f'follower - {self.user} following recipe - {self.recipe}'
 
@@ -132,6 +135,8 @@ class FollowUser(models.Model):
             models.UniqueConstraint(fields=['user', 'author'],
                                     name='unique together')
         ]
+        verbose_name = 'Подписки на авторов'
+        verbose_name_plural = 'Подписки на авторов'
 
     def __str__(self):
         return f'follower - {self.user} following - {self.author}'
@@ -146,3 +151,7 @@ class ShopingList(models.Model):
         Recipe,
         on_delete=models.CASCADE,
         related_name='recipe_shoping_list')
+
+    class Meta:
+        verbose_name = 'Корзина покупок'
+        verbose_name_plural = 'Корзина покупок'

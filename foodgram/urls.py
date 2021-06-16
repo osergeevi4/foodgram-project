@@ -13,7 +13,6 @@ urlpatterns = [
     path('auth/', include('users.urls')),
     path('auth/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
-    #path('api/', include('api.urls')),
     path('spec/', views.SpecPage.as_view(), name='spec'),
     path('', include('recipes.urls')),
 ]
