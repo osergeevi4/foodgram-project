@@ -76,7 +76,7 @@ def new_recipe(request):
     ingredients = get_ingredients(request)
     for quantity in ingredients.values():
         if quantity < 1:
-            form.add_error(None, "Кол-во ингридиентов не должно быть отрицательным")
+            form.add_error(None, 'Кол-во ингридиентов не должно быть отрицательным')
     if form.is_valid():
         recipe = save_recipe(request, form, ingredients)
         return redirect(
@@ -94,7 +94,7 @@ def recipe_edit(request, username, recipe_id):
     ingredients = get_ingredients(request)
     for quantity in ingredients.values():
         if quantity < 1:
-            form.add_error(None, "Кол-во ингридиентов не должно быть отрицательным")
+            form.add_error(None, 'Кол-во ингридиентов не должно быть отрицательным')
     if not request.user.is_superuser or request.user == recipe.author:
         if form.is_valid():
             recipe = edit_recipe(request, form, recipe, ingredients)
@@ -184,7 +184,7 @@ def download_card(request):
     response = HttpResponse(
         file_data, content_type='application/text charset=utf-8'
     )
-    filename = 'shopping_list.txt'
+    filename = 'shopping_list.pdf'
     response['Content-Disposition'] = ('attachment; filename={0}'
                                        .format(filename))
     return response

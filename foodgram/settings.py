@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'sorl.thumbnail',
     'users',
     'recipes',
+    'api',
 
 ]
 

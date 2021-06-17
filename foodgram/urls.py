@@ -10,6 +10,7 @@ handler500 = 'foodgram.views.server_error'
 
 urlpatterns = [
     path('about/', views.AboutPage.as_view(), name='about'),
+    path('api/', include('api.urls')),
     path('auth/', include('users.urls')),
     path('auth/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),

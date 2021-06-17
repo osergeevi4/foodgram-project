@@ -12,7 +12,7 @@ class SignUp(CreateView):
     form_class = CreationForm
     success_url = reverse_lazy('login')
     template_name = 'reg.html'
-    success_message = "Создан новый профиль!"
+    success_message = 'Спасибо за регистрацию'
 
 
 def login_page(request):

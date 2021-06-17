@@ -8,7 +8,7 @@ User = get_user_model()
 class Ingredient(models.Model):
     title = models.CharField(max_length=200, null=True,
                              blank=True, db_index=True,
-                             verbose_name="Ингредиент")
+                             verbose_name='Ингредиент')
     dimension = models.CharField(max_length=200, null=True, blank=True)
     description = models.TextField(max_length=200, blank=True, null=True)
 
@@ -54,13 +54,13 @@ class Recipe(models.Model):
         User,
         on_delete=models.CASCADE,
         related_name='recipes',
-        verbose_name="Автор")
+        verbose_name='Автор')
     title = models.CharField(max_length=200, verbose_name="Название")
     image = models.ImageField(
         upload_to='recipes/',
         blank=True,
         null=True,
-        verbose_name="Картинка"
+        verbose_name='Фото'
     )
     description = models.TextField(verbose_name="Описание")
     ingredients = models.ManyToManyField(
@@ -70,7 +70,7 @@ class Recipe(models.Model):
         verbose_name='Ингредиент'
     )
     cooking_time = models.PositiveIntegerField(
-        verbose_name="Время приготовления, мин"
+        verbose_name='Время приготовления, мин'
     )
     pub_date = models.DateTimeField(
         'date published',
