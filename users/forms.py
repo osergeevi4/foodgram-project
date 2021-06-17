@@ -30,7 +30,7 @@ class CreationForm(UserCreationForm):
                                 attrs={'class': 'form-control',
                                        'type': 'password',
                                        'name': 'password',
-                                       'placeholder': 'Введите пароль еще раз'}),
+                                       'placeholder': 'Повторите пароль'}),
                                 label='Повторите пароль')
 
     class Meta(UserCreationForm.Meta):
