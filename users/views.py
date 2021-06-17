@@ -41,4 +41,3 @@ class PasswordChangeView(PasswordChangeView):
     form_class = PasswordChangingForm
     success_message = 'Пароль изменен!'
     success_url = reverse_lazy('index')
-
