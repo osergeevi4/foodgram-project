@@ -10,7 +10,8 @@ class Command(BaseCommand):
             file_reader = csv.reader(file)
             for row in file_reader:
                 title, dimension = row
-                Ingredient.objects.get_or_create(title=title, dimension=dimension)
+                Ingredient.objects.get_or_create(title=title,
+                                                 dimension=dimension)
 
         with open('recipes/data/tags.csv', encoding='utf-8') as file:
             file_reader = csv.reader(file)
