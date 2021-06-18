@@ -1,13 +1,9 @@
-FROM python:3.9
-
-ENV PYTHONIOENCODING=utf8
+ROM python:3.8.5
 
 WORKDIR /code
 
 COPY . .
 
-RUN pip install --upgrade pip && pip install -r requirements.txt
+RUN pip install -r /code/requirements.txt
 
-RUN chmod a+x /code/run.sh
-
-ENTRYPOINT [ '/code/run.sh' ]
+CMD gunicorn api_yamdb.wsgi:application --bind 0.0.0.0:8000
