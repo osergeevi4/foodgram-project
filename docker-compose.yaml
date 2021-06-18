@@ -11,14 +11,14 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
-      - ./.env.example
+      - .env.example
   web:
     image: okodit/foodgram
     restart: always
     depends_on:
       - db
     env_file:
-      - ./.env.example
+      - .env.example
     volumes:
       - ./static:/code/static/
       - ./media:/code/media/
