@@ -6,7 +6,7 @@ WORKDIR /code
 
 COPY . .
 
-RUN pip install --upgrade pip && pip install -r /code/requirements.txt
+RUN pip install --upgrade pip && pip install -r requirements.txt
 
 RUN chmod a+x /code/run.sh
 
