@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.7'
 
 volumes:
   postgres_data:
@@ -20,10 +20,9 @@ services:
     env_file:
       - ./.env.example
     volumes:
-      - static_volume:/code/static/
-      - media_volume:/code/media/
-    ports:
-      - "8000:8000"
+      - ./static:/code/static/
+      - ./media:/code/media/
+    command: gunicorn foodgram.wsgi:application --bind 0.0.0.0:8000
   nginx:
     image: nginx:1.19.6
     restart: always
