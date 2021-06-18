@@ -15,6 +15,7 @@ services:
   web:
     image: okodit/foodgram
     restart: always
+    command: gunicorn foodgram.wsgi:application --bind 0.0.0.0:8000
     depends_on:
       - db
     env_file:
@@ -26,7 +27,7 @@ services:
     image: nginx:1.19.6
     restart: always
     volumes:
-      - ./nginx/default.conf:/etc/nginx/conf.d/:ro
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf rw
       - ./static:/code/static/
       - ./media:/code/media/
 
