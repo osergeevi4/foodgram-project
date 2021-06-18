@@ -1,5 +1,7 @@
 FROM python:3.8.5
 
+ENV PYTHONIOENCODING=utf8
+
 WORKDIR /code
 
 COPY . .
