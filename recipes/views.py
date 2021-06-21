@@ -79,7 +79,7 @@ def new_recipe(request):
             form.add_error(None,
                            'Кол-во ингридиентов не должно быть отрицательным')
     if request.method == 'POST' and not ingredients:
-        form.add_error(None, 'Обязательное поле.')
+        form.add_error(None, 'Внесите ингредиенты.')
     if form.is_valid():
         recipe = save_recipe(request, form, ingredients)
         return redirect(
@@ -100,7 +100,7 @@ def recipe_edit(request, username, recipe_id):
             form.add_error(None,
                            'Кол-во ингридиентов не должно быть отрицательным')
     if request.method == 'POST' and not ingredients:
-        form.add_error(None, 'Обязательное поле.')
+        form.add_error(None, 'Внесите ингредиенты.')
     if not request.user.is_superuser:
         if request.user != recipe.author:
             return redirect(
