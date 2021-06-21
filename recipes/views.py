@@ -78,6 +78,8 @@ def new_recipe(request):
         if quantity < 1:
             form.add_error(None,
                            'Кол-во ингридиентов не должно быть отрицательным')
+    if request.method == 'POST' and not ingredients:
+        form.add_error(None, 'Обязательное поле.')
     if form.is_valid():
         recipe = save_recipe(request, form, ingredients)
         return redirect(
@@ -97,18 +99,24 @@ def recipe_edit(request, username, recipe_id):
         if quantity < 1:
             form.add_error(None,
                            'Кол-во ингридиентов не должно быть отрицательным')
-    if not request.user.is_superuser or request.user == recipe.author:
-        if form.is_valid():
-            recipe = edit_recipe(request, form, recipe, ingredients)
+    if request.method == 'POST' and not ingredients:
+        form.add_error(None, 'Обязательное поле.')
+    if not request.user.is_superuser:
+        if request.user != recipe.author:
             return redirect(
                 'recipe_view', recipe_id=recipe.id, username=recipe.author
             )
+    if form.is_valid():
+        recipe = edit_recipe(request, form, recipe, ingredients)
+        return redirect(
+            'recipe_view', recipe_id=recipe.id, username=recipe.author
+        )
     return render(request, 'formRecipe.html',
                   {'form': form, 'recipe': recipe})
 
 
 @login_required
-def recipe_delete(request, username, recipe_id):
+def recipe_delete(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
     if request.user.is_superuser or request.user == recipe.author:
         recipe.delete()
@@ -186,7 +194,7 @@ def download_card(request):
     response = HttpResponse(
         file_data, content_type='application/text charset=utf-8'
     )
-    filename = 'shopping_list.pdf'
+    filename = 'shopping_list.txt'
     response['Content-Disposition'] = ('attachment; filename={0}'
                                        .format(filename))
     return response
