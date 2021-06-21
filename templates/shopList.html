@@ -23,9 +23,9 @@
                     <img src="{{ im.url }}" alt="The author of the recipe did not add a photo" class="recipe__image recipe__image_big">
                     </a>
                     {% endthumbnail %}
-                    
+
                     <h3 class="recipe__title">{{ recipe.recipe.title }}</h3>
-                    
+
                     <p class="recipe__text"><span class="icon-time"></span> {{ recipe.recipe.cooking_time }} мин.</p>
                 </div>
                 <a href="#" class="shopping-list__button link">Удалить</a>
@@ -33,8 +33,11 @@
         {% endfor %}
 
         </ul>
+    {% if shopping_list|length == 0 %}
+        <p>В Вашем списке нет рецептов!</p>
+    {% else %}
         <a href="{% url 'download_card' %}"><button class="button button_style_blue">Скачать список</button></a>
-
+    {% endif %}
 
     </div>
 </main>

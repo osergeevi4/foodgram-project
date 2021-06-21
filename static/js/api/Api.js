@@ -16,7 +16,7 @@ class Api {
   }
 
   async addPurchases(id) {
-    const e = await fetch(`/api/v1/purchases/`, {
+    const e = await fetch(`${this.apiUrl}/api/v1/purchases/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -36,10 +36,7 @@ class IngredientRecipe(models.Model):
                                  validators=[MinValueValidator(1)])
 
     class Meta:
-        constraints = [
-            models.UniqueConstraint(fields=['ingredient', 'recipe'],
-                                    name='unique ingredient and recipe')
-        ]
+        unique_together = ('ingredient', 'recipe')
         verbose_name = 'Ингредиент рецепта'
         verbose_name_plural = 'Ингредиенты рецепта'
 
@@ -55,25 +52,26 @@ class Recipe(models.Model):
         on_delete=models.CASCADE,
         related_name='recipes',
         verbose_name='Автор')
-    title = models.CharField(max_length=200, verbose_name="Название")
+    title = models.CharField(max_length=200, verbose_name='Название')
     image = models.ImageField(
         upload_to='recipes/',
         blank=True,
         null=True,
         verbose_name='Фото'
     )
-    description = models.TextField(verbose_name="Описание")
+    description = models.TextField(verbose_name='Описание')
     ingredients = models.ManyToManyField(
         'Ingredient',
         related_name='recipes',
         through='IngredientRecipe',
-        verbose_name='Ингредиент'
+        verbose_name='Ингредиент',
     )
     cooking_time = models.PositiveIntegerField(
-        verbose_name='Время приготовления, мин'
+        verbose_name='Время приготовления, мин',
+        validators=[MinValueValidator(1)]
     )
     pub_date = models.DateTimeField(
-        'date published',
+        'Дата публикации',
         auto_now_add=True)
     tags = models.ManyToManyField(
         'Tag',
