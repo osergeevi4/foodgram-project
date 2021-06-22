@@ -7,7 +7,7 @@ const configButton = {
         attr: 'data-out',
         default: {
             class: 'button_style_light-blue',
-            text: '<span class="icon-plus button__icon"></span>Добавить в покупки'
+            text: `<span class="icon-plus button__icon"></span>Добавить в покупки`
         },
         active: {
             class: 'button_style_light-blue-outline',
@@ -18,7 +18,7 @@ const configButton = {
         attr: 'data-out',
         default: {
             class: ['button', 'button_style_none'],
-            text: '<span class="icon-favorite"></span>'
+            text: `<span class="icon-favorite"></span>`
         },
         active: {
             class: '.icon-favorite_active',

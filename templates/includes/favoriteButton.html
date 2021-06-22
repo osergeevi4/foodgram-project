@@ -1,13 +1,11 @@
 {% load user_filters %}
 {% load templates_filters %}
-<button class="button button_style_none" name="favorites" 
-  {% if recipe|is_favorite:user %}
-    data-out><span class="icon-favorite {% if big %}icon-favorite_big{% endif %}">
-  {% else %}
-    ><span class="icon-favorite icon-favorite_active {% if big %}icon-favorite_big{% endif %}">
-  {% endif %}
-    </span>
+{% if recipe|is_favorite:user %}
+<button class="button button_style_none" name="favorites" data-out>
+  <span class="icon-favorite icon-favorite_active"></span>
 </button>
-{% if big %}
-  <div class="single-card__favorite-tooltip tooltip">Добавить в избранное</div>
+{% else %}
+<button class="button button_style_none" name="favorites">
+  <span class="icon-favorite"></span>
+</button>
 {% endif %}

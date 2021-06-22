@@ -25,7 +25,7 @@ class Favorites(LoginRequiredMixin, View):
         recipe_id = req.get('id')
         if recipe_id is not None:
             recipe = get_object_or_404(Recipe, id=recipe_id)
-            _, created = FollowRecipe.objects.get_or_create(
+            obj, created = FollowRecipe.objects.get_or_create(
                 user=request.user, recipe=recipe
             )
             return JsonResponse({'success': created})

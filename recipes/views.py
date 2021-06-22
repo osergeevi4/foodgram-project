@@ -116,7 +116,7 @@ def recipe_edit(request, username, recipe_id):
 
 
 @login_required
-def recipe_delete(request, recipe_id):
+def recipe_delete(request, username, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
     if request.user.is_superuser or request.user == recipe.author:
         recipe.delete()
