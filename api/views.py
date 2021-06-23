@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404
 from django.views import View
 from rest_framework.utils import json
 
+from recipes.context_processors import get_shop_list
 from recipes.models import (FollowRecipe, FollowUser, Ingredient, Recipe,
                             ShopingList)
 
@@ -45,7 +46,7 @@ class Subscribe(LoginRequiredMixin, View):
         author_id = req.get('id')
         if author_id:
             author = get_object_or_404(User, id=author_id)
-            _, created = FollowUser.objects.get_or_create(
+            obj, created = FollowUser.objects.get_or_create(
                 user=request.user, author=author
             )
             return JsonResponse({'success': created})
@@ -66,9 +67,10 @@ class Purchase(LoginRequiredMixin, View):
         recipe_id = req.get('id')
         if recipe_id is not None:
             recipe = get_object_or_404(Recipe, id=recipe_id)
-            ShopingList.objects.get_or_create(user=request.user, recipe=recipe)
-            return JsonResponse({'success': True})
-
+            obj, created = ShopingList.objects.get_or_create(user=request.user, recipe=recipe)
+            if created:
+                return JsonResponse({'success': True})
+            return JsonResponse({'success': False})
         return JsonResponse({'success': False}, status=400)
 
     def delete(self, request, recipe_id):
@@ -78,3 +80,12 @@ class Purchase(LoginRequiredMixin, View):
             recipe__id=recipe_id)
         obj.delete()
         return JsonResponse({'success': True})
+
+
+class DynamicButton(View):
+    def get(self, request, *args, **kwargs):
+        print(get_shop_list(request)['shop_list_count'])
+        if get_shop_list(request)['shop_list_count'] - 1 == 0:
+            return JsonResponse({'data': True})
+        else:
+            return JsonResponse({'data': False})

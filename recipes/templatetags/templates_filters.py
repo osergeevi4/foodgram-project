@@ -46,7 +46,7 @@ def get_recipes(author):
 @register.filter(name='get_count_recipes')
 def get_count_recipes(author):
     if author is not None:
-        count = author.recipes.count() - 3
+        count = author.recipes.count()
         if count < 1:
             return False
 
@@ -57,7 +57,7 @@ def get_count_recipes(author):
         else:
             end = 'рецептов'
 
-        return f'Еще {count} {end}...'
+        return f'Посмотреть все {count} {end}.'
 
 
 @register.filter(name='parse_tags')
