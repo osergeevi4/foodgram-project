@@ -81,12 +81,38 @@ def new_recipe(request):
     if request.method == 'POST' and not ingredients:
         form.add_error(None, 'Внесите ингредиенты.')
     if form.is_valid():
-        recipe = save_recipe(request, form, ingredients)
+        recipe = save_recipe(request, form)
         return redirect(
             'recipe_view', recipe_id=recipe.id, username=recipe.author
         )
     return render(request, 'formRecipe.html', {'form': form})
 
+
+# @login_required
+# def recipe_edit(request, username, recipe_id):
+#     recipe = get_object_or_404(Recipe, id=recipe_id, author__username=username)
+#     form = RecipeForm(request.POST or None,
+#                       files=request.FILES or None,
+#                       instance=recipe)
+#     ingredients = get_ingredients(request)
+#     for quantity in ingredients.values():
+#         if quantity < 1:
+#             form.add_error(None,
+#                            'Кол-во ингридиентов не должно быть отрицательным')
+#     if request.method == 'POST' and not ingredients:
+#         form.add_error(None, 'Внесите ингредиенты.')
+#     if not request.user.is_superuser:
+#         if request.user != recipe.author:
+#             return redirect(
+#                 'recipe_view', recipe_id=recipe.id, username=username
+#             )
+#     if form.is_valid():
+#         recipe = edit_recipe(request, form, recipe)
+#         return redirect(
+#             'recipe_view', recipe_id=recipe.id, username=username
+#         )
+#     return render(request, 'formRecipe.html',
+#                   {'form': form, 'recipe': recipe})
 
 @login_required
 def recipe_edit(request, username, recipe_id):
@@ -97,23 +123,17 @@ def recipe_edit(request, username, recipe_id):
     ingredients = get_ingredients(request)
     for quantity in ingredients.values():
         if quantity < 1:
-            form.add_error(None,
-                           'Кол-во ингридиентов не должно быть отрицательным')
-    if request.method == 'POST' and not ingredients:
-        form.add_error(None, 'Внесите ингредиенты.')
-    if not request.user.is_superuser:
-        if request.user != recipe.author:
+            form.add_error(None, "Кол-во ингридиентов не должно быть отрицательным")
+    if request.user != recipe.author:
+        return redirect('index')
+    if not request.user.is_superuser or request.user == recipe.author:
+        if form.is_valid():
+            recipe = edit_recipe(request, form, recipe, ingredients)
             return redirect(
                 'recipe_view', recipe_id=recipe.id, username=recipe.author
             )
-    if form.is_valid():
-        recipe = edit_recipe(request, form, recipe, ingredients)
-        return redirect(
-            'recipe_view', recipe_id=recipe.id, username=recipe.author
-        )
     return render(request, 'formRecipe.html',
                   {'form': form, 'recipe': recipe})
-
 
 @login_required
 def recipe_delete(request, username, recipe_id):
