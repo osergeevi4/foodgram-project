@@ -33,18 +33,21 @@
         {% endfor %}
 
         </ul>
-    {% if shopping_list|length == 0 %}
-        <p>В Вашем списке нет рецептов!</p>
+    {% if shop_list_count > 0 %}
+        <a href="{% url 'download_card' %}" id='download_link'><button class="button button_style_blue" id='download_link'>Скачать список</button></a>
     {% else %}
-        <a href="{% url 'download_card' %}"><button class="button button_style_blue">Скачать список</button></a>
+        <a href=#><button class="button button_style_blue" >У Вас нет рецептов в списке</button></a>
     {% endif %}
 
     </div>
 </main>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="{% static 'js/api/ajax.js' %}"></script>
 <script src="{% static 'js/config/config.js' %}"></script>
 <script src="{% static 'js/components/Header.js' %}"></script>
 <script src="{% static 'js/components/ShopList.js' %}"></script>
 <script src="{% static 'js/api/Api.js' %}"></script>
 <script src="{% static 'shopList.js' %}"></script>
+
 
 {% endblock %}

@@ -11,6 +11,7 @@ urlpatterns = [
     path('subscriptions/<int:author_id>/', views.Subscribe.as_view()),
     path('purchases/', views.Purchase.as_view(), name='purchases'),
     path('purchases/<int:recipe_id>/', views.Purchase.as_view()),
+    path('delete-button', views.DynamicButton.as_view(), name='dynamicbutton'),
 ]
 
 urlpatterns = [

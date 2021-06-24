@@ -107,7 +107,7 @@ class Api {
     }
     return await Promise.reject(e.statusText);
   }
-  
+
   async getIngredients(text) {
     const e = await fetch(`/api/v1/ingredients?query=${text}`, {
       headers: {
