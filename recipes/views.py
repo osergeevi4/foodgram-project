@@ -97,7 +97,8 @@ def recipe_edit(request, username, recipe_id):
     ingredients = get_ingredients(request)
     for quantity in ingredients.values():
         if quantity < 1:
-            form.add_error(None, "Кол-во ингридиентов не должно быть отрицательным")
+            form.add_error(None,
+                           "Кол-во ингридиентов не должно быть отрицательным")
     if request.user != recipe.author:
         return redirect('index')
     if not request.user.is_superuser or request.user == recipe.author:
