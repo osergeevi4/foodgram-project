@@ -23,7 +23,7 @@
             </div>
             <div class="card-user__body">
                 <ul class="card-user__items">
-                    {% for recipe in follow.recipes.all %}
+                    {% for recipe in follow.recipes.all|slice:":3" %}
                     <li class="card-user__item">
                         <div class="recipe {% if shop_list %}recipe_reverse{% endif %}">
                         {% load thumbnail %}
