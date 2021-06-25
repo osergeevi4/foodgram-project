@@ -81,7 +81,7 @@ def new_recipe(request):
     if request.method == 'POST' and not ingredients:
         form.add_error(None, 'Внесите ингредиенты.')
     if form.is_valid():
-        recipe = save_recipe(request, form)
+        recipe = save_recipe(request, form, ingredients)
         return redirect(
             'recipe_view', recipe_id=recipe.id, username=recipe.author
         )
