@@ -85,8 +85,5 @@ class Purchase(LoginRequiredMixin, View):
 
 class DynamicButton(View):
     def get(self, request, *args, **kwargs):
-        print(get_shop_list(request)['shop_list_count'])
         if get_shop_list(request)['shop_list_count'] - 1 == 0:
             return JsonResponse({'data': True})
-        else:
-            return JsonResponse({'data': False})
