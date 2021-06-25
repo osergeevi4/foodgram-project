@@ -36,7 +36,10 @@ class IngredientRecipe(models.Model):
                                  validators=[MinValueValidator(1)])
 
     class Meta:
-        unique_together = ('ingredient', 'recipe')
+        constraints = [
+            models.UniqueConstraint(fields=['ingredient', 'recipe'],
+                                    name='unique ingredient and recipe')
+        ]
         verbose_name = 'Ингредиент рецепта'
         verbose_name_plural = 'Ингредиенты рецепта'
 
@@ -110,6 +113,11 @@ class FollowRecipe(models.Model):
         related_name='following_recipe')
 
     class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user',
+                                            'recipe'],
+                                    name='unique user and recipe')
+        ]
         verbose_name_plural = 'Избранные рецепты'
 
     def __str__(self):
@@ -129,7 +137,7 @@ class FollowUser(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(fields=['user', 'author'],
-                                    name='unique together')
+                                    name='unique together user author')
         ]
         verbose_name = 'Подписки на авторов'
         verbose_name_plural = 'Подписки на авторов'
@@ -149,5 +157,9 @@ class ShopingList(models.Model):
         related_name='recipe_shoping_list')
 
     class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'recipe'],
+                                    name='unique together')
+        ]
         verbose_name = 'Корзина покупок'
         verbose_name_plural = 'Корзина покупок'
